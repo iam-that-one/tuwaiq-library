@@ -170,16 +170,16 @@ struct ContentView: View {
                         }else if searchByName != "" && searchById == "" && searchByAuthName == ""{
                             ForEach(bvm.books.filter({$0.title.lowercased().contains(searchByName.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))})) { book in
                                 if book.image != nil{
+                                    Image("\(book.image!)")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                }else{
                                     Image(uiImage:book.image2!)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 }
-                                    Image("\(book.image2!)")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                
                                 HStack{
                                     Spacer()
                                     VStack{
