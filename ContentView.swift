@@ -17,8 +17,8 @@ struct ContentView: View {
     @EnvironmentObject var bvm : BooksViewModel
     @State var title = ""
     @State var author = ""
-    @State var price = 0.0
-    @State var quantity = 0
+    @State var price = "0.0"
+    @State var quantity = "0"
     @State var show_detiles = false
     @State var searchById = ""
     @State var searchByName = ""
@@ -27,7 +27,7 @@ struct ContentView: View {
     @State var showActionSheet = false
     @State var showImagePicker = false
     @State var book_img : Image?
-    @State var book_img0 : Image?
+  
     @State var PickedImage : UIImage
     @State var sourceType:UIImagePickerController.SourceType = .camera
     var body: some View {
@@ -57,8 +57,8 @@ struct ContentView: View {
                             Text("Add New Book")
                             TextField("Book title", text: $title)
                             TextField("Author", text: $author)
-                            TextField("price", value: $price, formatter: NumberFormatter())
-                            TextField("remaining books", value: $quantity, formatter: NumberFormatter())
+                            TextField("price", text: $price)
+                            TextField("remaining books", text: $quantity)
                             VStack{
                                 if book_img != nil{
                                     book_img!
@@ -98,11 +98,11 @@ struct ContentView: View {
                             Spacer()
                             Button("Add Book"){
                              
-                                bvm.books.append(Book(id: UUID().uuidString, title: title, author: author , price: price , quantity: quantity , image2:  book_img!))
+                                bvm.books.append(Book(id: UUID().uuidString, title: title, author: author , price: Double(price) , quantity: Int(quantity), image: nil , image2: PickedImage))
                                 book_img = nil
                                 title = ""
-                                price = 0.0
-                                quantity = 0
+                                price = "0.0"
+                                quantity = "0"
                                 author = ""
                                 showSheet = false
                              
@@ -121,8 +121,10 @@ struct ContentView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                }else{
-                                    Image("\(book.image2!)")
+                                }
+                                
+                              else  if book.image2 != nil{
+                                Image(uiImage:book.image2!)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -168,7 +170,7 @@ struct ContentView: View {
                         }else if searchByName != "" && searchById == "" && searchByAuthName == ""{
                             ForEach(bvm.books.filter({$0.title.lowercased().contains(searchByName.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))})) { book in
                                 if book.image != nil{
-                                    Image("\(book.image!)")
+                                    Image(uiImage:book.image2!)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -224,7 +226,7 @@ struct ContentView: View {
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 }else{
-                                    Image("\(book.image2!)")
+                                    Image(uiImage:book.image2!)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -275,7 +277,7 @@ struct ContentView: View {
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 }else{
-                                    Image("\(book.image2!)")
+                                    Image(uiImage:book.image2!)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -369,7 +371,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(book_img0: nil,PickedImage: UIImage())
+        ContentView(PickedImage: UIImage())
     }
 }
 
@@ -393,7 +395,7 @@ struct Cart : View {
                                 }
                                 
                                 else if item.image == nil{
-                                    Image("\(item.image2!)")
+                                    Image(uiImage:item.image2!)
                                         .resizable()
                                         .frame(width: 30, height: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 }
@@ -480,7 +482,9 @@ struct  CheckOut : View {
                                 .frame(width: 30, height: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                         }
                         else{
-                            
+                            Image(uiImage:item.image2!)
+                                .resizable()
+                                .frame(width: 30, height: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                         }
                         VStack(alignment: .leading){
                             Text(item.title)
