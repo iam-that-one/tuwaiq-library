@@ -15,7 +15,7 @@ class BooksViewModel: ObservableObject {
                                      Book(id: UUID().uuidString, title: "Clean Code", author: "Robert Cecil Martin", price: 50.0, quantity: 5, image: "Clean Code"),
                                      Book(id: UUID().uuidString, title: "Start with why", author: "Simon Sinek", price: 80.0, quantity: 13, image: "Start with why")]
     
-    @Published var cartItems = [Book]()
+     var cartItems = [Book]()
     @Published var cart = 0
      var totalAdded : Int{
          cart

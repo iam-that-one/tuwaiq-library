@@ -27,6 +27,7 @@ struct ContentView: View {
     @State var showActionSheet = false
     @State var showImagePicker = false
     @State var book_img : Image?
+    @State var book_img0 : Image?
     @State var PickedImage : UIImage
     @State var sourceType:UIImagePickerController.SourceType = .camera
     var body: some View {
@@ -96,7 +97,16 @@ struct ContentView: View {
                             })
                             Spacer()
                             Button("Add Book"){
-                                bvm.books.append(Book(id: UUID().uuidString, title: title, author: author , price: price , quantity: quantity , image2: Image(uiImage :PickedImage)))
+                             
+                                bvm.books.append(Book(id: UUID().uuidString, title: title, author: author , price: price , quantity: quantity , image2:  book_img!))
+                                book_img = nil
+                                title = ""
+                                price = 0.0
+                                quantity = 0
+                                author = ""
+                                showSheet = false
+                             
+                                
                             }
                         }.padding()
                     })
@@ -107,12 +117,12 @@ struct ContentView: View {
                         if searchByName == "" && searchById == "" && searchByAuthName == ""{
                             ForEach(bvm.books) { book in
                                 if book.image != nil{
-                                    Image("\(book.image!)")
+                                    Image(book.image!)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 }else{
-                                    Image(uiImage: PickedImage)
+                                    Image("\(book.image2!)")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -162,12 +172,12 @@ struct ContentView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                }else{
-                                    Image(uiImage: PickedImage)
+                                }
+                                    Image("\(book.image2!)")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                }
+                                
                                 HStack{
                                     Spacer()
                                     VStack{
@@ -214,7 +224,7 @@ struct ContentView: View {
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 }else{
-                                    Image(uiImage: PickedImage)
+                                    Image("\(book.image2!)")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -265,7 +275,7 @@ struct ContentView: View {
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 }else{
-                                    Image(uiImage: PickedImage)
+                                    Image("\(book.image2!)")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -359,7 +369,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(PickedImage: UIImage())
+        ContentView(book_img0: nil,PickedImage: UIImage())
     }
 }
 

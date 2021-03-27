@@ -13,7 +13,7 @@ struct Tuwaiq_libraryApp: App {
     var body: some Scene {
         
         WindowGroup {
-            ContentView(PickedImage: UIImage()).environmentObject(book)
+            ContentView(book_img0: nil,PickedImage: UIImage()).environmentObject(book)
         }
     }
 }
