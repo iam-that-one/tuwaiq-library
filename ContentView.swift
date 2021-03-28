@@ -63,7 +63,7 @@ struct ContentView: View {
                                 if book_img != nil{
                                     book_img!
                                         .resizable()
-                                        .frame(width: 300, height: 500, alignment: .center)
+                                        .frame(width: 300, height: 450, alignment: .center)
                                         .foregroundColor(.green)
                                     
                                 }
@@ -108,6 +108,7 @@ struct ContentView: View {
                              
                                 
                             }
+                            Spacer()
                         }.padding()
                     })
                 }.padding(5)
@@ -119,15 +120,17 @@ struct ContentView: View {
                                 if book.image != nil{
                                     Image(book.image!)
                                         .resizable()
-                                        .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .shadow(color: .black,radius: 10)
+                                        .scaledToFill()
                                 }
                                 
                               else  if book.image2 != nil{
                                 Image(uiImage:book.image2!)
                                         .resizable()
-                                        .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                    .shadow(color: .black,radius: 10)
+                                    .scaledToFill()
                                 }
                                 HStack{
                                     Spacer()
@@ -172,13 +175,15 @@ struct ContentView: View {
                                 if book.image != nil{
                                     Image("\(book.image!)")
                                         .resizable()
-                                        .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .shadow(color: .black,radius: 10)
+                                        .scaledToFill()
                                 }else{
                                     Image(uiImage:book.image2!)
                                         .resizable()
-                                        .scaledToFit()
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .shadow(color: .black,radius: 10)
+                                        .scaledToFill()
                                 }
                                 HStack{
                                     Spacer()
@@ -223,13 +228,17 @@ struct ContentView: View {
                                 if book.image != nil{
                                     Image("\(book.image!)")
                                         .resizable()
-                                        .scaledToFit()
+                            
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .shadow(color: .black,radius: 10)
+                                        .scaledToFill()
                                 }else{
                                     Image(uiImage:book.image2!)
                                         .resizable()
-                                        .scaledToFit()
+                                       
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .shadow(color: .black,radius: 10)
+                                        .scaledToFill()
                                 }
                                 HStack{
                                     Spacer()
@@ -274,13 +283,17 @@ struct ContentView: View {
                                 if book.image != nil{
                                     Image("\(book.image!)")
                                         .resizable()
-                                        .scaledToFit()
+                                        
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .shadow(color: .black,radius: 10)
+                                        .scaledToFill()
                                 }else{
                                     Image(uiImage:book.image2!)
                                         .resizable()
-                                        .scaledToFit()
+                                    
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 500, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .shadow(color: .black,radius: 10)
+                                        .scaledToFill()
                                 }
                                 HStack{
                                     Spacer()
@@ -473,7 +486,9 @@ struct  CheckOut : View {
     @State private var moveToLibrary = false
     var body: some View{
         VStack{
+            List{
             ForEach(bv.cartItems){item in
+               
                 VStack(alignment: .leading){
                     HStack{
                         if let img = item.image{
@@ -506,7 +521,7 @@ struct  CheckOut : View {
                 
                 .navigationBarTitle(Text("Manage your cart"))
             }
-            
+        }
             Form{
                 Section{
                     VStack{
@@ -579,15 +594,25 @@ struct  CheckOut : View {
                         ForEach(bv.cartItems) {item in
                             HStack{
                                 Text(item.title)
+                                    .font(Font.system(size: 12, design: .monospaced))
                                 Spacer()
                                 Text("$\(item.price!, specifier: "%.2f")")
+                                    .font(Font.system(size: 12, design: .monospaced))
                                 
                             }
                         }
-                        Text("++++++++++++++++++++++++++++++++")
+                        HStack{
+                            Spacer()
+                        Text("+++++++++++++++++++++++++++++++++++++++++++++++++")
+                            .font(Font.system(size: 12, design: .monospaced))
+                            .multilineTextAlignment(.center)
+                            Spacer()
+                        }
+                          
                         Text("TOTAL: $\(bv.totalprice, specifier: "%.2f")")
+                            .font(Font.system(size: 12, design: .monospaced))
                         Text("Paid by: \(self.paymentTypes[paymentType])")
-                            .font(Font.system(size: 10, weight: .bold, design: .serif))
+                            .font(Font.system(size: 12, design: .monospaced))
                         Spacer()
                         Button(action:{
                             presentationMode.wrappedValue.dismiss()
